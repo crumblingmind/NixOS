@@ -88,6 +88,7 @@
       cloudflare-warp
       home-manager
       git
+      bind.dnsutils
     ];
 
   # Some programs need SUID wrappers, can be configured further or are
