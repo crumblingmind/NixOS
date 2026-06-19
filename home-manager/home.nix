@@ -1,8 +1,9 @@
 { config, pkgs, ... }: {
 
         imports = [
-          ./modules/aliases.nix
-          ./modules/git.nix
+         ./modules/git.nix
+         ./modules/aliases.nix
+         ./modules/hyprland.nix
         ];       
 
         home = {

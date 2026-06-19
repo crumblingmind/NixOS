@@ -7,6 +7,7 @@
     ];
 
   # Use the systemd-boot EFI boot loader.
+  boot.kernelParams = [ "1920x1080" ];
   boot.loader = {
    efi = {
     canTouchEfiVariables = true;
@@ -15,9 +16,15 @@
     enable = true;
     device = "nodev";
     efiSupport = true;
+    gfxmodeBios = "1920x1080";
+    gfxmodeEfi = "1920x1080";
    };
   };
   # networking.hostName = "nixos"; # Define your hostname.
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true; 
+ };  
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
@@ -79,6 +86,9 @@
       firefox
       home-manager
       git
+      kitty
+      alacritty
+      foot
     ];
 
 
