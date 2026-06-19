@@ -41,11 +41,10 @@
     # useXkbConfig = true;
     };
   
-    services.desktopManager.plasma6.enable = true;
     
 
   # Enable the X11 windowing system.
-    services.xserver.enable = true;
+  # services.xserver.enable = true;
 
 
   # Configure keymap in X11
@@ -70,9 +69,6 @@
     users.users.test = {
       isNormalUser = true;
       extraGroups = [ "wheel" "networkmanager" ];
-  #   packages = with pkgs; [
-  #     tree
-  #   ];
     };
 
 
