@@ -22,6 +22,11 @@
   };
   # networking.hostName = "nixos"; # Define your hostname.  
 
+  programs.hyprland = {
+      enable = true;
+  };
+
+
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
 

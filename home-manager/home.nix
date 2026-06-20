@@ -3,6 +3,7 @@
         imports = [
          ./modules/git.nix
          ./modules/aliases.nix
+         ./modules/hypr/hyprland.nix
         ];       
 
         home = {
