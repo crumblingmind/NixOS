@@ -3,6 +3,8 @@
 
   inputs = {
           nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+          
+          zapret-discord-youtube.url = "github:kartavkun/zapret-discord-youtube";          
 
           home-manager = {
                   url = "github:nix-community/home-manager";
@@ -10,17 +12,31 @@
           };
   };
 
-  outputs = { nixpkgs, home-manager, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, zapret-discord-youtube, ... } @ inputs:
           let
                   system = "x86_64-linux";
           in {
-          nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+          nixosConfigurations.huawei = nixpkgs.lib.nixosSystem {
                   inherit system;
                   specialArgs = { inherit inputs; };
-                  modules = [ ./configuration.nix ];
+                  modules = [ ./configuration.nix
+          
+                              zapret-discord-youtube.nixosModules.withTestTools
+                              {
+                                services.zapret-discord-youtube = {
+                                enable = true;
+                                configName = "general(ALT3)";
+                                gameFilter = "null";
+                                listGeneral = [ "youtube.com" ];
+                                #listExclude = [];
+                                ipsetAll = [ "191.168.1.0/24" "10.0.0.1" ];
+                                #ipsetExclude = [];
+                                };
+                              }
+                  ];
           };
-      
-          homeConfigurations.test = home-manager.lib.homeManagerConfiguration {
+          
+          homeConfigurations.crumblingmind = home-manager.lib.homeManagerConfiguration {
                   pkgs = nixpkgs.legacyPackages.${system};
                   modules = [ ./home-manager/home.nix ];
           }; 

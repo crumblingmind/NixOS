@@ -2,7 +2,7 @@
  programs.bash = {
          enable = true;
          shellAliases = {
-                 rebuild = "sudo nixos-rebuild switch --flake ~/.dotfiles#nixos";
+                 rebuild = "sudo nixos-rebuild switch --flake ~/.dotfiles#huawei";
          };
  };
 }

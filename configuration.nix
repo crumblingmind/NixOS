@@ -7,7 +7,6 @@
     ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.kernelParams = [ "1920x1080" ];
   boot.loader = {
    efi = {
     canTouchEfiVariables = true;
@@ -16,16 +15,18 @@
     enable = true;
     device = "nodev";
     efiSupport = true;
-    gfxmodeBios = "1920x1080";
-    gfxmodeEfi = "1920x1080";
+    useOSProber = true;
    };
   };
-  # networking.hostName = "nixos"; # Define your hostname.  
 
-  programs.hyprland = {
-      enable = true;
-  };
-
+  services.cloudflare-warp.enable = true; 
+ 
+  nix.settings.substituters = [
+  #  "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
+    "https://cache.nixos.org/"
+  ];  
+ 
+  networking.hostName = "huawei"; # Define your hostname.  
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
@@ -34,6 +35,8 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ]; 
 
+  #services.cloudflare-warp.enable = true; 
+ 
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
 
@@ -48,19 +51,22 @@
       keyMap = "us";
     # useXkbConfig = true;
     };
-  
-    
-
+      
   # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-
+  services.xserver = {
+    enable = true;
+    xkb.layout = "us,ru";
+    xkbVariant = "";
+    xkbOptions = "grp:win_space_toggle";
+    desktopManager = {
+      xfce.enable = true;
+    };
+    displayManager.defaultSession = "xfce";
+  };  
 
   # Configure keymap in X11
-    services.xserver.xkb.layout = "us";
+  #  services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "grp:win_space_toggle";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
 
   # Enable sound.
   # services.pulseaudio.enable = true;
@@ -74,11 +80,14 @@
     services.libinput.enable = true;
 
   # Define a user account.
-    users.users.test = {
+    users.users.crumblingmind = {
       isNormalUser = true;
       extraGroups = [ "wheel" "networkmanager" ];
     };
 
+    nixpkgs.config.permittedInsecurePackages = [
+      "electron-39.8.10"
+    ];
 
   # List packages installed in system profile.
     environment.systemPackages = with pkgs; [
@@ -87,13 +96,12 @@
       firefox
       home-manager
       git
-      kitty
-      alacritty
-      foot
+      cloudflare-warp
+      bitwarden-desktop
     ];
 
 
-  system.stateVersion = "25.11";
+    system.stateVersion = "25.11";
 
 }
 
