@@ -98,6 +98,7 @@
       git
       cloudflare-warp
       bitwarden-desktop
+      vivaldi
     ];
 
 
