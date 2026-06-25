@@ -4,8 +4,16 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      inputs.home-manager.nixosModules.home-manager
     ];
-
+  
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      crumblingmind = import ./home-manager/home.nix;
+    };
+  };  
+  
   # Use the systemd-boot EFI boot loader.
   boot.loader = {
    efi = {
@@ -20,22 +28,24 @@
   };
 
   services.cloudflare-warp.enable = true; 
- 
-  nix.settings.substituters = [
-  #  "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
-    "https://cache.nixos.org/"
-  ];  
- 
-  networking.hostName = "huawei"; # Define your hostname.  
 
-  # Configure network connections interactively with nmcli or nmtui.
-  networking.networkmanager.enable = true;
+  # Enable Hyprland
+  programs.hyprland = {
+       enable = true;
+       xwayland = {
+          enable = true;
+       };  
+  };
+ 
+  # Network.
+  networking.hostName = "huawei";
+  networking.networkmanager.enable = true;  
 
+  
   nixpkgs.config.allowUnfree = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ]; 
-
-  #services.cloudflare-warp.enable = true; 
+  # Enable Flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];  
  
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
@@ -52,21 +62,19 @@
     # useXkbConfig = true;
     };
       
-  # Enable the X11 windowing system.
-  services.xserver = {
-    enable = true;
-    xkb.layout = "us,ru";
-    xkbVariant = "";
-    xkbOptions = "grp:win_space_toggle";
-    desktopManager = {
-      xfce.enable = true;
-    };
-    displayManager.defaultSession = "xfce";
+  # Enable Plasma.
+  services = {
+    desktopManager.plasma6.enable = true;
+    displayManager.plasma-login-manager.enable = true;
   };  
 
   # Configure keymap in X11
-  #  services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "grp:win_space_toggle";
+  services.xserver = {
+    enable = true;
+    xkb.layout = "us,ru";
+    xkb.variant = "";
+    xkb.options = "grp:win_space_toggle";
+  };
 
   # Enable sound.
   # services.pulseaudio.enable = true;
@@ -99,6 +107,10 @@
       cloudflare-warp
       bitwarden-desktop
       vivaldi
+      discord
+      fastfetch
+      kitty
+      rofi
     ];
 
 
