@@ -19,7 +19,6 @@
                   inherit system;
                   specialArgs = { inherit inputs; };
                   modules = [ ./configuration.nix
-          
                               zapret-discord-youtube.nixosModules.withTestTools
                               {
                                 services.zapret-discord-youtube = {
@@ -35,11 +34,13 @@
                   ];
           };
           
-          homeConfigurations.crumblingmind = home-manager.lib.homeManagerConfiguration {
+          homeConfigurations = { 
+            crumblingmind = home-manager.lib.homeManagerConfiguration {
                   inherit pkgs;
+                 
                   modules = [ ./home-manager/home.nix ];
           }; 
 
   };
-
+ };
 }

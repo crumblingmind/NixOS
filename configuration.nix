@@ -111,6 +111,7 @@
       fastfetch
       kitty
       rofi
+      tree
     ];
 
 
