@@ -20,10 +20,10 @@
     canTouchEfiVariables = true;
    };
    grub = { 
-    enable = true;
-    device = "nodev";
-    efiSupport = true;
-    useOSProber = true;
+     enable = true;
+     device = "nodev";
+     efiSupport = true;
+     useOSProber = true;
    };
   };
 
@@ -93,27 +93,19 @@
       extraGroups = [ "wheel" "networkmanager" ];
     };
 
-    nixpkgs.config.permittedInsecurePackages = [
-      "electron-39.8.10"
-    ];
-
   # List packages installed in system profile.
     environment.systemPackages = with pkgs; [
       vim
-      htop
-      firefox
+      btop
       home-manager
       git
       cloudflare-warp
-      bitwarden-desktop
-      vivaldi
-      discord
       fastfetch
       kitty
       rofi
       tree
+      waybar
     ];
-
 
     system.stateVersion = "25.11";
 
